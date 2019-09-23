@@ -22,7 +22,18 @@ print(f'Users who reviewed Nature greater that 100: {nature}')
 
 shopping_query = ('SELECT count(Shopping) from review WHERE Shopping >= 100;')
 shopping = buddy_move_cursor.execute(shopping_query).fetchone()[0]
-print(f'Users who reviewed Shopping greater that 100: {shopping}')
+print(f'Users who reviewed Shopping greater that 100: {shopping}\n')
 
 buddy_move_cursor.close()
+
+buddy_move_stretch_cursor = buddy_move_conn.cursor()
+
+columns = ['Sports', 'Religious', 'Nature', 'Theatre', 'Shopping', 'Picnic']
+for column in columns:
+    average_query = f'SELECT avg({column}) from review;'
+    average = int(buddy_move_stretch_cursor.execute(
+        average_query
+        ).fetchone()[0])
+    print(f'Average {column} reviews: {average}')
+
 buddy_move_conn.close()

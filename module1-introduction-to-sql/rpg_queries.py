@@ -58,22 +58,20 @@ cursor4 = CONN.cursor()
 
 query4_character_item_count = ('SELECT character_id, count(item_id) FROM ' +
                                'charactercreator_character_inventory ' +
-                               'GROUP BY character_id')
+                               'GROUP BY character_id ' +
+                               'LIMIT 20')
 
 character_items = cursor4.execute(query4_character_item_count).fetchall()
-character_items = pd.DataFrame(character_items)
 print(f'Number of items held by characters:\n{character_items}')
 
 query4_character_weapon_count = ('SELECT character_id, count(item_id) ' +
                                  'FROM charactercreator_character_inventory ' +
-                                 'WHERE character_id < 50 AND ' +
-                                 'item_id in '
+                                 'WHERE item_id in ' +
                                  '(SELECT item_ptr_id FROM armory_weapon)' +
-                                 'GROUP BY character_id')
+                                 'GROUP BY character_id ' +
+                                 'LIMIT 20')
 
 character_weapons = cursor4.execute(query4_character_weapon_count).fetchall()
-character_weapons = pd.DataFrame(character_weapons,
-                                 columns={'character_id', 'weapon_count'})
 print(f'Number of weapons held by characters:\n{character_weapons}')
 
 cursor4.close()
@@ -82,3 +80,5 @@ cursor4.close()
 cursor5 = CONN.cursor()
 
 print(sum(character_weapons['weapon_count']))
+
+CONN.close()
