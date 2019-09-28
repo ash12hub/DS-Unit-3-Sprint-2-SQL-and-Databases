@@ -4,7 +4,7 @@ northwind_conn = sqlite3.connect('northwind_small.sqlite3')
 northwind_cursor1 = northwind_conn.cursor()
 
 most_expensive_query = (
-                        'SELECT ProductName FROM '+
+                        'SELECT ProductName FROM ' +
                         '(SELECT * FROM  Product ' +
                         'Order by UnitPrice DESC LIMIT 10);'
 )
@@ -13,14 +13,18 @@ most_expensive = northwind_cursor1.execute(most_expensive_query).fetchall()
 most_expensive_string = ''
 for i in range(len(most_expensive) - 1):
     most_expensive_string = most_expensive_string + most_expensive[i][0] + ', '
-most_expensive_string =  most_expensive_string + most_expensive[9][0]
+most_expensive_string = most_expensive_string + most_expensive[9][0]
 
 """10 MostExpensive Items"""
 print(f'The 10 most expensive items are: {most_expensive_string}.\n')
 
 
-birth_dates = northwind_cursor1.execute('SELECT BirthDate FROM Employee;').fetchall()
-hire_dates = northwind_cursor1.execute('SELECT HireDate FROM Employee;').fetchall()
+birth_dates = northwind_cursor1.execute(
+                                        'SELECT BirthDate FROM Employee;'
+                                       ).fetchall()
+hire_dates = northwind_cursor1.execute(
+                                       'SELECT HireDate FROM Employee;'
+                                       ).fetchall()
 
 
 def split_dates(dates):
@@ -32,7 +36,7 @@ def split_dates(dates):
         years.append(int(split_date[0]))
         months.append(int(split_date[1]))
         days.append(int(split_date[2]))
-    
+
     return years, months, days
 
 
@@ -54,10 +58,13 @@ for i in range(len(brith_years)):
     age.append(year)
 
 """Average age of employees at hire"""
-print(f'The Average Age of Employees at the time of hire is {get_average(age)}.\n')
+print(f'The Average Age of Employees at the time of hire is' +
+      f'{get_average(age)}.\n')
 
 
-employee_cities = northwind_cursor1.execute('SELECT City FROM Employee;').fetchall()
+employee_cities = northwind_cursor1.execute(
+                                            'SELECT City FROM Employee;'
+                                           ).fetchall()
 cities = []
 city_agess = []
 
@@ -79,8 +86,10 @@ northwind_cursor1.close()
 
 northwind_cursor2 = northwind_conn.cursor()
 
-product_supplier_price_query = ('SELECT Product.ProductName, Supplier.CompanyName FROM Product ' +
-                                'INNER JOIN Supplier ON Product.SupplierId = Supplier.id ' +
+product_supplier_price_query = ('SELECT Product.ProductName, ' +
+                                'Supplier.CompanyName FROM Product ' +
+                                'INNER JOIN Supplier ON '
+                                'Product.SupplierId = Supplier.id ' +
                                 'ORDER BY Product.UnitPrice DESC ' +
                                 'LIMIT 10;')
 
