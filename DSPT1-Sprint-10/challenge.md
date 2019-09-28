@@ -134,6 +134,17 @@ interview screening questions (a form you fill when applying for a job):
   what is a situation where it is not appropriate?
 - What is "NewSQL", and what is it trying to achieve?
 
+#### Answers
+- The relationship between Employee and Territory is one to many. This is because one
+  one employee can be responsible for many territories. And each territory can only be assigned
+  to one employee.
+- Document stores are appropriate for apllications like commerce where a document is created, saved and
+  easy to access for every payment carried out. However, big high transactional databases like a banking database,
+  for example may not be appropriate for Document stores.
+- NewSQL is a querying language similar to SQL that is designed to be
+  less complex and more consistent.
+  
+
 ### Part 5 - Turn it in!
 Add all the files you wrote (`demo_data.py`, `northwind.py`), as well as this
 file with your answers to part 4, to your weekly repo

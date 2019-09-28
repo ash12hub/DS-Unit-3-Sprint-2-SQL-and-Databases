@@ -94,7 +94,19 @@ product_supplier_price_query = ('SELECT Product.ProductName, ' +
                                 'LIMIT 10;')
 
 """10 MostExpensive Items with their Suppliers"""
-print(northwind_cursor2.execute(product_supplier_price_query).fetchall())
+print(str(northwind_cursor2.execute(product_supplier_price_query).fetchall()) + '\n\n')
+
+
+largest_category_query = ('SELECT Category.CategoryName ' +
+                          'FROM Product ' +
+                          'NNER JOIN Category ' +
+                          'ON CategoryId = Category.id ' +
+                          'GROUP BY Category.CategoryName ' +
+                          'ORDER BY count(DISTINCT ProductName) DESC '
+                          'LIMIT 1;')
+largest_category = northwind_cursor2.execute(largest_category_query).fetchone()[0]
+"""Largest Category"""
+print(f'The Largest Category is {largest_category}')
 
 northwind_cursor2.close()
 northwind_conn.close()
